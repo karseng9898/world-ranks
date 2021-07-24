@@ -1,6 +1,7 @@
 import Layout from "../../components/Layout/Layout";
 import styles from "./Country.module.css";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 const getCountry = async (id) => {
   const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${id}`);
@@ -27,7 +28,12 @@ const Country = ({ country }) => {
       <div className={styles.container}>
         <div className={styles.container_left}>
           <div className={styles.overview_panel}>
-            <img src={country.flag} alt={country.name} />
+            <Image
+              src={country.flag}
+              alt={country.name}
+              width={1000}
+              height={500}
+            />
 
             <h1 className={styles.overview_name}>{country.name}</h1>
             <div className={styles.overview_region}>{country.region}</div>
@@ -98,14 +104,17 @@ const Country = ({ country }) => {
               </div>
 
               <div className={styles.details_panel_borders_container}>
-                {borders.map(({ flag, name }) => (
-                  <div className={styles.details_panel_borders_country}>
-                    <img src={flag} alt={name} />
-                    <div className={styles.details_panel_borders_name}>
-                      {name}
+                {borders.map(({ flag, name }) => {
+                  console.log(flag);
+                  return (
+                    <div className={styles.details_panel_borders_country}>
+                      <Image src={flag} alt={name} width={300} height={150} />
+                      <div className={styles.details_panel_borders_name}>
+                        {name}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
