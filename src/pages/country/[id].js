@@ -2,6 +2,7 @@ import Layout from "../../components/Layout/Layout";
 import styles from "./Country.module.css";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const getCountry = async (id) => {
   const res = await fetch(`https://restcountries.eu/rest/v2/alpha/${id}`);
@@ -21,7 +22,7 @@ const Country = ({ country }) => {
 
   useEffect(() => {
     getBorders();
-  }, []);
+  });
 
   return (
     <Layout title={country.name}>
@@ -95,7 +96,9 @@ const Country = ({ country }) => {
 
             <div className={styles.details_panel_row}>
               <div className={styles.details_panel_label}>Gini</div>
-              <div className={styles.details_panel_value}>{country.gini} %</div>
+              <div className={styles.details_panel_value}>
+                {country.gini || 0} %
+              </div>
             </div>
 
             <div className={styles.details_panel_borders}>
@@ -104,9 +107,8 @@ const Country = ({ country }) => {
               </div>
 
               <div className={styles.details_panel_borders_container}>
-                {borders.map(({ flag, name }) => {
-                  console.log(flag);
-                  return (
+                {borders.map(({ flag, name, alpha3Code }) => (
+                  <Link href={`./${alpha3Code}`} key={name}>
                     <div
                       key={name}
                       className={styles.details_panel_borders_country}
@@ -116,8 +118,8 @@ const Country = ({ country }) => {
                         {name}
                       </div>
                     </div>
-                  );
-                })}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
