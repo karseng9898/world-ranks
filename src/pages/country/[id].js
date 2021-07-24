@@ -107,7 +107,10 @@ const Country = ({ country }) => {
                 {borders.map(({ flag, name }) => {
                   console.log(flag);
                   return (
-                    <div className={styles.details_panel_borders_country}>
+                    <div
+                      key={name}
+                      className={styles.details_panel_borders_country}
+                    >
                       <Image src={flag} alt={name} width={300} height={150} />
                       <div className={styles.details_panel_borders_name}>
                         {name}
